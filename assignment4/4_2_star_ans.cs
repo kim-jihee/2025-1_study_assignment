@@ -9,65 +9,43 @@ namespace star
             Console.WriteLine("Enter the radius: ");
             int radius = int.Parse(Console.ReadLine());
             int size = 2 * (radius + 1);
+
             // ---------- TODO ----------
-char[,] canvas = new char[size, size];
-
-// 1. 초기화 (공백으로 채우기)
-for (int i = 0; i < size; i++)
-{
-    for (int j = 0; j < size; j++)
-    {
-        canvas[i, j] = ' ';
-    }
-}
-
-// 중심 좌표
-int cx = size / 2;
-int cy = size / 2;
-
-// 2. C 그리기 (세 변: 위, 아래, 왼쪽)
-for (int i = 0; i < size; i++)
-{
-    for (int j = 0; j < size; j++)
-    {
-        double dist = Math.Sqrt(SqrDistance2D(i, j, cx, cy));
-        if (IsClose(dist, radius, 1.0))
-        {
-            // 세 변만 남기기
-            if (j < cx - radius / 2 || i == cy - radius || i == cy + radius)
+            for (int y = 0; y < size; y++)
             {
-                canvas[i, j] = '*';
+                for (int x = 0; x <= 24; x++)
+                {
+                    bool draw = false;
+
+                    // 오른쪽 수직줄
+                    if (x == 17 || x == 19)
+                    {
+                        draw = true;
+                    }
+
+                    // 왼쪽 수직줄 (세로줄)
+                    if (x == 1 && y >= 2 && y <= 9)
+                    {
+                        draw = true;
+                    }
+
+                    // 왼쪽 수평줄
+                    if ((y == 1 || y == 10) && x >= 2 && x <= 10)
+                    {
+                        draw = true;
+                    }
+
+                    // 중간 가로줄 (오른쪽)
+                    if ((y == 4 || y == 8) && x >= 11 && x <= 24)
+                    {
+                        draw = true;
+                    }
+
+                    Console.Write(draw ? "*" : " ");
+                }
+                Console.WriteLine();
             }
-        }
-    }
-}
-
-// 3. # 그리기 (정사각형 3등분 지점에 선분 추가)
-int oneThird = size / 3;
-int twoThirds = 2 * size / 3;
-
-for (int i = 0; i < size; i++)
-{
-    for (int j = 0; j < size; j++)
-    {
-        if (i == oneThird || i == twoThirds || j == oneThird || j == twoThirds)
-        {
-            canvas[i, j] = '*';
-        }
-    }
-}
-
-// 4. 출력
-for (int i = 0; i < size; i++)
-{
-    for (int j = 0; j < size; j++)
-    {
-        Console.Write(canvas[i, j]);
-    }
-    Console.WriteLine();
-}
-// --------------------
-
+            // --------------------
         }
 
         // calculate the distance between (x1, y1) and (x2, y2)
