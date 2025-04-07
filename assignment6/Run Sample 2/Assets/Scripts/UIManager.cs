@@ -31,5 +31,9 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         MessageText.text = "";
     }
+   public void ShowRestartButton(bool isShow)
+    {
+        RestartButton.SetActive(isShow);
+    }
 
 }

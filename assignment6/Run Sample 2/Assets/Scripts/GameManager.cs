@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject Character;
     public GameObject CamObj;
-    
+
     const float CharacterSpeed = 3f;
 
     public int NowScore = 0;
@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         MyUIManager.DisplayScore(NowScore);
         MyUIManager.DisplayMessage("", 0);
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -29,39 +29,48 @@ public class GameManager : MonoBehaviour
     // For smooth cam moving, it's good to use LateUpdate.
     void LateUpdate()
     {
-        MoveCam();
+        MoveCam(GetCamObj());
     }
 
-    void MoveCam()
+    private GameObject GetCamObj()
+    {
+        return CamObj;
+    }
+
+    void MoveCam(GameObject camObj)
     {
         // CamObj는 Character의 x, y position을 따라간다.
-        // ---------- TODO ---------- 
-        
-        // -------------------- 
+        // ---------- TODO ----------
+        Vector3 charPos = Character.transform.position;
+        camObj.transform.position = new Vector3(charPos.x, charPos.y, camObj.transform.position.z);
+        // --------------------
     }
 
     void MoveCharacter()
     {
         // Character는 초당 CharacterSpeed의 속도로 우측으로 움직인다.
-        // ---------- TODO ---------- 
-        
-        // -------------------- 
+        // ---------- TODO ----------
+        Character.transform.Translate(Vector3.right * CharacterSpeed * Time.deltaTime);
+        // --------------------
     }
 
     public void GameOver()
     {
         // Character를 삭제하고, "Game Over!"라는 메시지를 3초간 띄우고, RestartButton을 활성화한다.
-        // ---------- TODO ---------- 
-        
-        // -------------------- 
+        // ---------- TODO ----------
+        Destroy(Character);
+        MyUIManager.DisplayMessage("Game Over!", 3f);
+        MyUIManager.ShowRestartButton(true);
+        // --------------------
     }
 
     public void GetPoint(int point)
     {
         // point만큼 점수를 증가시키고 UI에 표시한다.
-        // ---------- TODO ---------- 
-        
-        // -------------------- 
+        // ---------- TODO ----------
+        NowScore += point;
+        MyUIManager.DisplayScore(NowScore);
+        // --------------------
     }
 
     // Restart the game
@@ -70,3 +79,4 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
