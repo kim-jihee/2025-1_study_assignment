@@ -11,7 +11,40 @@ namespace star
             int size = 2 * (radius + 1);
 
             // ---------- TODO ----------
+            for (int y = 0; y < size; y++)
+            {
+                for (int x = 0; x <= 24; x++)
+                {
+                    bool draw = false;
 
+                    // 오른쪽 수직줄
+                    if (x == 17 || x == 19)
+                    {
+                        draw = true;
+                    }
+
+                    // 왼쪽 수직줄 (세로줄)
+                    if (x == 1 && y >= 2 && y <= 9)
+                    {
+                        draw = true;
+                    }
+
+                    // 왼쪽 수평줄
+                    if ((y == 1 || y == 10) && x >= 2 && x <= 10)
+                    {
+                        draw = true;
+                    }
+
+                    // 중간 가로줄 (오른쪽)
+                    if ((y == 4 || y == 8) && x >= 11 && x <= 24)
+                    {
+                        draw = true;
+                    }
+
+                    Console.Write(draw ? "*" : " ");
+                }
+                Console.WriteLine();
+            }
             // --------------------
         }
 
